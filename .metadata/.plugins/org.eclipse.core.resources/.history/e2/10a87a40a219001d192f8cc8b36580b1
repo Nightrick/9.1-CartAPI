@@ -1,0 +1,11 @@
+package co.grandcircus.cartapi;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface CartItemsRepository extends MongoRepository<CartItems, String>{
+	
+	List<CartItems> findByProduct(String product);
+
+}

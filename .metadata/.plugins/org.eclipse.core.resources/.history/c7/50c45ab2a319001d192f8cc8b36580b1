@@ -1,0 +1,25 @@
+package co.grandcircus.cartapi;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CartItemsController {
+	
+	@Autowired
+	private CartItemsRepository repo;
+	
+	@GetMapping("/cart-items")
+	public String cartItems(@RequestParam String product, @RequestParam Double maxPrice, @RequestParam String prefix, @RequestParam Integer pageSize) {
+		
+		if(product != null) {
+			repo.findByProduct(product);
+		}
+		
+		return "cart-items";
+	}
+	
+
+}

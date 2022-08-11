@@ -1,0 +1,54 @@
+package co.grandcircus.cartapi;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CartItemsController {
+	
+	@Autowired
+	private CartItemsRepository repo;
+	
+	@GetMapping("/reset")
+	public String resetDB() {
+		
+		//Delete all
+		repo.deleteAll();
+		
+		//Add cart items to the DB
+		CartItems item = new CartItems("Paper Towels", 20.50, 2);
+		repo.insert(item);
+		
+		item = new CartItems("Pickles", 3.75, 1);
+		repo.insert(item);
+		
+		item = new CartItems("Mustard", 1.49, 1);
+		repo.insert(item);
+		
+		item = new CartItems("Ketchup", 1.25, 1);
+		repo.insert(item);
+		
+		item = new CartItems("Hot Dogs", 5.05, 2);
+		repo.insert(item);
+		
+		item = new CartItems("Hot Dog Buns", 3.50, 2);
+		repo.insert(item);
+		
+		return "reset";
+	}
+	
+	
+	@GetMapping("/cart-items")
+	public String cartItems(@RequestParam String product, @RequestParam Double maxPrice, @RequestParam String prefix, @RequestParam Integer pageSize) {
+		
+		if(product != null) {
+			repo.findByProduct(product);
+		}
+		
+		return "cart-items";
+	}
+	
+
+}
